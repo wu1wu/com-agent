@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoM Agent — Synthesis Pitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #fff; overflow: hidden; }
+        .slide { width:100vw;height:100vh;display:none;flex-direction:column;justify-content:center;align-items:center;padding:60px 80px;position:relative; }
+        .slide.active { display: flex; }
+        .slide-num { position:absolute;bottom:30px;right:40px;font-size:1em;color:rgba(255,255,255,0.2);font-weight:800; }
+        .logo { position:absolute;top:30px;left:40px;font-size:1.1em;font-weight:800;color:rgba(255,255,255,0.3);letter-spacing:2px; }
+        .crops-tag { position:absolute;top:30px;right:40px;font-size:0.75em;padding:6px 14px;border-radius:20px;background:rgba(171,71,188,0.15);color:#ce93d8;font-weight:700;letter-spacing:1px; }
+        h1 { font-size:3.5em;font-weight:900;line-height:1.1;margin-bottom:20px; }
+        h2 { font-size:2.2em;font-weight:800;margin-bottom:25px; }
+        .sub { font-size:1.2em;color:rgba(255,255,255,0.5);line-height:1.8;max-width:700px;text-align:center; }
+        .accent { color: #ce93d8; }
+        .green { color: #66bb6a; }
+        .orange { color: #ffb74d; }
+        .blue { color: #5c9aff; }
+        .dim { color: rgba(255,255,255,0.35); }
+        .card-row { display:flex;gap:25px;margin-top:30px;width:90%;max-width:1100px; }
+        .card { flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:30px 25px;text-align:center;backdrop-filter:blur(10px); }
+        .card h3 { font-size:1.2em;margin:12px 0 8px;font-weight:700; }
+        .card p { font-size:0.9em;color:rgba(255,255,255,0.5);line-height:1.6; }
+        .card .icon { font-size:2.5em;margin-bottom:5px; }
+        .card.highlight { border-color:rgba(206,147,216,0.4);background:rgba(206,147,216,0.06); }
+        .arrow-between { font-size:2em;color:rgba(255,255,255,0.15);display:flex;align-items:center; }
+        .code-block { background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:25px 30px;font-family:'Consolas',monospace;font-size:0.85em;text-align:left;line-height:1.8;max-width:750px;width:85%;color:rgba(255,255,255,0.7); }
+        .code-block .hl { color:#ce93d8;font-weight:700; }
+        .code-block .val { color:#ffb74d; }
+        .code-block .ok { color:#66bb6a; }
+        .code-block .cm { color:rgba(255,255,255,0.25); }
+        .flow-line { display:flex;align-items:center;gap:12px;margin-top:30px;flex-wrap:wrap;justify-content:center; }
+        .flow-box { padding:14px 24px;border-radius:12px;font-weight:700;font-size:0.95em; }
+        .flow-arrow { font-size:1.5em;color:rgba(255,255,255,0.2); }
+        .crops-grid { display:grid;grid-template-columns:1fr 1fr;gap:15px;width:85%;max-width:900px;margin-top:20px; }
+        .crops-item { padding:20px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06); }
+        .crops-item .letter { font-size:2em;font-weight:900;margin-bottom:8px; }
+        .crops-item h4 { font-size:1em;margin-bottom:6px;color:rgba(255,255,255,0.8); }
+        .crops-item p { font-size:0.8em;color:rgba(255,255,255,0.4);line-height:1.5; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+        .slide.active > * { animation:fadeUp 0.6s ease-out both; }
+        .slide.active > *:nth-child(2) { animation-delay:0.15s; }
+        .slide.active > *:nth-child(3) { animation-delay:0.3s; }
+        .slide.active > *:nth-child(4) { animation-delay:0.45s; }
+        .slide.active > *:nth-child(5) { animation-delay:0.6s; }
+        #start-overlay { position:fixed;inset:0;background:#0a0a0f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer; }
+        #start-overlay .play-btn { font-size:4em;font-weight:900;padding:25px 55px;border:3px solid rgba(255,255,255,0.3);border-radius:18px;color:#fff;letter-spacing:3px;transition:all 0.3s; }
+        #start-overlay:hover .play-btn { border-color:#ce93d8;color:#ce93d8; }
+        #progress { position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,#ce93d8,#5c9aff);z-index:100;transition:width 0.5s ease; }
+    </style>
+</head>
+<body>
+<div id="progress" style="width:0%"></div>
+
+<div id="start-overlay" onclick="startPitch()">
+    <div style="font-size:1.2em;color:rgba(255,255,255,0.3);margin-bottom:30px;letter-spacing:3px;">THE SYNTHESIS HACKATHON 2026</div>
+    <div class="play-btn">▶ CoM AGENT</div>
+    <div style="font-size:0.9em;color:rgba(255,255,255,0.2);margin-top:25px;">Design Intelligence Service · Click to begin</div>
+</div>
+
+<!-- S1: Hook -->
+<div class="slide" id="s1">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="slide-num">01 / 08</div>
+    <h1>What if any AI agent<br>could <span class="accent">understand</span><br>hardware?</h1>
+    <p class="sub">
+        AI agents can trade, code, and write. But none of them can analyze a mechanical design.<br>
+        Until now.
+    </p>
+</div>
+
+<!-- S2: Problem -->
+<div class="slide" id="s2">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="slide-num">02 / 08</div>
+    <h2>The <span class="orange">Knowledge Gap</span></h2>
+    <div class="card-row">
+        <div class="card">
+            <div class="icon">🤖</div>
+            <h3>AI Agents Today</h3>
+            <p>Can trade tokens, search the web, write code, generate images...</p>
+            <div style="margin-top:12px;font-size:0.8em;color:rgba(255,255,255,0.25);">Great at digital tasks</div>
+        </div>
+        <div class="arrow-between" style="font-size:3em;">≠</div>
+        <div class="card">
+            <div class="icon">🔧</div>
+            <h3>Physical Hardware</h3>
+            <p>Gears mesh? Motor strong enough? Chain transfers force? Which parts connect?</p>
+            <div style="margin-top:12px;font-size:0.8em;color:rgba(239,83,80,0.6);">No agent can answer this</div>
+        </div>
+    </div>
+    <div style="margin-top:25px;font-size:1.1em;color:rgba(255,255,255,0.4);">
+        Evaluating mechanical feasibility requires <strong style="color:#fff;">expensive domain expertise</strong><br>
+        that is slow, inaccessible, and <strong style="color:#fff;">not available as an API</strong>.
+    </div>
+</div>
+
+<!-- S3: Solution -->
+<div class="slide" id="s3">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="slide-num">03 / 08</div>
+    <h2>Design Intelligence <span class="accent">as a Service</span></h2>
+    <p class="sub" style="margin-bottom:20px;">One API call. Any agent becomes a hardware expert.</p>
+    <div class="code-block">
+<span class="cm">// Agent A wants to evaluate a design</span>
+<span class="hl">POST</span> /analyze  <span class="cm">// x402 micropayment attached</span>
+{
+  "prompt": <span class="val">"A robotic arm that picks up cups"</span>,
+  "components": [<span class="val">"motor_28BYJ"</span>, <span class="val">"gear_worm"</span>, <span class="val">"arm_segment"</span>]
+}
+
+<span class="cm">// CoM Agent returns:</span>
+{
+  "mechanicalPath": [<span class="val">"Motor → Worm Gear → Arm Joint → Gripper"</span>],
+  "complexityScore": <span class="ok">576</span>,      <span class="cm">// Structure × Electronics × Logic</span>
+  "feasibility":     <span class="ok">"PASS"</span>,    <span class="cm">// Physics simulation result</span>
+  "metricsHash":     <span class="hl">"0x1f2e..."</span> <span class="cm">// On-chain verifiable</span>
+}
+    </div>
+</div>
+
+<!-- S4: How It Works -->
+<div class="slide" id="s4">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="slide-num">04 / 08</div>
+    <h2>How It Works</h2>
+    <div class="flow-line" style="gap:8px;">
+        <div class="flow-box" style="background:rgba(92,154,255,0.08);border:1px solid rgba(92,154,255,0.2);">
+            <span class="blue">🤖 Agent A</span><br><span class="dim" style="font-size:0.8em;">Needs design analysis</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:rgba(255,183,77,0.08);border:1px solid rgba(255,183,77,0.2);">
+            <span class="orange">💳 x402</span><br><span class="dim" style="font-size:0.8em;">$0.01 micropayment</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:rgba(206,147,216,0.12);border:2px solid rgba(206,147,216,0.4);">
+            <span class="accent">🧠 CoM Agent</span><br><span class="dim" style="font-size:0.8em;">Analyze in TEE</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:rgba(102,187,106,0.08);border:1px solid rgba(102,187,106,0.2);">
+            <span class="green">📊 Result</span><br><span class="dim" style="font-size:0.8em;">Score + Hash</span>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:rgba(92,154,255,0.08);border:1px solid rgba(92,154,255,0.2);">
+            <span class="blue">⛓️ On-chain</span><br><span class="dim" style="font-size:0.8em;">Hash committed</span>
+        </div>
+    </div>
+    <div style="margin-top:35px;font-size:1em;color:rgba(255,255,255,0.4);max-width:600px;text-align:center;line-height:1.8;">
+        Agent discovers agent → pays agent → uses result.<br>
+        <strong style="color:rgba(255,255,255,0.6);">No human needed. Pure machine economy.</strong>
+    </div>
+</div>
+
+<!-- S5: Dark Knowledge -->
+<div class="slide" id="s5">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="crops-tag">🔐 DARK KNOWLEDGE</div>
+    <div class="slide-num">05 / 08</div>
+    <h2>The Recipe Stays <span class="accent">Sealed</span></h2>
+    <div class="card-row" style="max-width:900px;">
+        <div class="card highlight" style="flex:1.5;">
+            <div class="icon">🔒</div>
+            <h3>What Only CoM Agent Knows</h3>
+            <p style="text-align:left;padding:0 10px;">
+                • How to trace a mechanical transmission path<br>
+                • How to score component interactions<br>
+                • How to predict feasibility from structure<br>
+                • How to evaluate n³ complexity<br><br>
+                <strong style="color:#ce93d8;">ChatGPT, Claude, Gemini — none of them can do this.</strong>
+            </p>
+        </div>
+        <div class="arrow-between">→</div>
+        <div class="card" style="flex:1;">
+            <div class="icon">📤</div>
+            <h3>What You Get</h3>
+            <p>
+                Score: <strong class="green">576</strong><br>
+                Path: Motor → Gear → Arm<br>
+                Hash: 0x1f2e...<br><br>
+                <strong style="color:rgba(255,255,255,0.5);">Result, never the recipe.</strong>
+            </p>
+        </div>
+    </div>
+    <div style="margin-top:20px;font-size:0.9em;color:rgba(255,255,255,0.3);">
+        Lit Protocol TEE ensures the algorithm runs in a sealed environment. IPFS-deployed. Tamper-proof.
+    </div>
+</div>
+
+<!-- S6: Multi-Agent Economy -->
+<div class="slide" id="s6">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="slide-num">06 / 08</div>
+    <h2>Agent <span class="accent">Economy</span></h2>
+    <div class="card-row" style="max-width:1000px;gap:15px;">
+        <div class="card" style="border-color:rgba(92,154,255,0.3);">
+            <div style="font-size:0.7em;color:#5c9aff;font-weight:700;letter-spacing:2px;margin-bottom:8px;">PRODUCER</div>
+            <div class="icon">🏭</div>
+            <h3>Production Market</h3>
+            <p>Needs complexity score before createDesign()</p>
+            <div style="margin-top:8px;font-size:0.75em;color:rgba(255,255,255,0.25);">Pays $0.01/analysis</div>
+        </div>
+        <div class="card highlight">
+            <div style="font-size:0.7em;color:#ce93d8;font-weight:700;letter-spacing:2px;margin-bottom:8px;">INTELLIGENCE</div>
+            <div class="icon">🧠</div>
+            <h3 class="accent">CoM Agent</h3>
+            <p>Analyzes → returns score + hash</p>
+            <div style="margin-top:8px;font-size:0.75em;color:#ce93d8;">Earns per request</div>
+        </div>
+        <div class="card" style="border-color:rgba(255,183,77,0.3);">
+            <div style="font-size:0.7em;color:#ffb74d;font-weight:700;letter-spacing:2px;margin-bottom:8px;">CONSUMER</div>
+            <div class="icon">📰</div>
+            <h3>News Alpha Agent</h3>
+            <p>Checks design feasibility before trading</p>
+            <div style="margin-top:8px;font-size:0.75em;color:rgba(255,255,255,0.25);">Pays $0.005/check</div>
+        </div>
+    </div>
+    <div style="margin-top:25px;font-size:0.95em;color:rgba(255,255,255,0.3);">
+        Three agents. Three wallets. One verifiable trust chain via ERC-8004.
+    </div>
+</div>
+
+<!-- S7: CROPS -->
+<div class="slide" id="s7">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="crops-tag">🌾 CROPS</div>
+    <div class="slide-num">07 / 08</div>
+    <h2>Built for CROPS</h2>
+    <div class="crops-grid">
+        <div class="crops-item">
+            <div class="letter accent">C</div>
+            <h4>Censorship Resistance</h4>
+            <p>Listed on decentralized agent markets (OpenServ, Olas). No single platform controls access.</p>
+        </div>
+        <div class="crops-item">
+            <div class="letter green">O</div>
+            <h4>Open Source</h4>
+            <p>API spec is fully open. Anyone can build a competing analysis engine. The interface is the standard.</p>
+        </div>
+        <div class="crops-item">
+            <div class="letter accent">P</div>
+            <h4>Privacy</h4>
+            <p>Analysis runs in Lit TEE or locally. User prompts never leave their environment. Venice for LLM inference.</p>
+        </div>
+        <div class="crops-item">
+            <div class="letter orange">S</div>
+            <h4>Security</h4>
+            <p>metricsHash lets consumers verify output correctness without trusting the agent. Graceful degradation if offline.</p>
+        </div>
+    </div>
+</div>
+
+<!-- S8: Final -->
+<div class="slide" id="s8">
+    <div class="logo">🧠 CoM AGENT</div>
+    <div class="slide-num">08 / 08</div>
+    <h1 style="font-size:2.8em;">The world's first<br><span class="accent">hardware intelligence</span><br>agent.</h1>
+    <p class="sub" style="margin-top:15px;margin-bottom:25px;">
+        Foundation models know what's public.<br>
+        CoM Agent knows what isn't.
+    </p>
+    <div style="display:flex;gap:30px;margin-bottom:30px;">
+        <div style="text-align:center;padding:15px 25px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
+            <div style="font-size:1.8em;font-weight:900" class="accent">$0.01</div>
+            <div style="font-size:0.75em;color:rgba(255,255,255,0.3);margin-top:4px;">per analysis</div>
+        </div>
+        <div style="text-align:center;padding:15px 25px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
+            <div style="font-size:1.8em;font-weight:900" class="green">&lt;1s</div>
+            <div style="font-size:0.75em;color:rgba(255,255,255,0.3);margin-top:4px;">response time</div>
+        </div>
+        <div style="text-align:center;padding:15px 25px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
+            <div style="font-size:1.8em;font-weight:900" class="orange">∞</div>
+            <div style="font-size:0.75em;color:rgba(255,255,255,0.3);margin-top:4px;">availability</div>
+        </div>
+    </div>
+    <div style="font-size:0.8em;color:rgba(255,255,255,0.2);">
+        Wu Xi · Agent #34679 · Harness: Antigravity (Gemini) · github.com/wu1wu/com-agent
+    </div>
+</div>
+
+<script>
+    const TOTAL=8; let current=0; let timer=null;
+    function showSlide(n) {
+        document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+        const s=document.getElementById('s'+n);
+        if(s){s.classList.add('active');current=n;document.getElementById('progress').style.width=((n/TOTAL)*100)+'%';}
+        clearTimeout(timer);
+        if(n<TOTAL) timer=setTimeout(()=>showSlide(n+1),12000);
+    }
+    function startPitch(){document.getElementById('start-overlay').style.display='none';showSlide(1);}
+    document.addEventListener('keydown',e=>{
+        if(e.key==='ArrowRight'||e.key===' '){clearTimeout(timer);if(current<TOTAL)showSlide(current+1);}
+        else if(e.key==='ArrowLeft'){clearTimeout(timer);if(current>1)showSlide(current-1);}
+    });
+    document.addEventListener('click',e=>{
+        if(document.getElementById('start-overlay').style.display==='none'){clearTimeout(timer);if(current<TOTAL)showSlide(current+1);}
+    });
+</script>
+</body>
+</html>
