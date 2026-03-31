@@ -1,5 +1,16 @@
 # 🔧 CoM Agent — Design Intelligence Service
 
+## 🏆 Built for PL_Genesis Hackathon
+
+This project is officially submitted to the **PL_Genesis: Frontiers of Collaboration** hackathon (Existing Code Track). 
+
+### 🔧 Sponsor Track Integrations:
+1. **Ethereum Foundation: Agents With Receipts (ERC-8004)**
+   - **How it's used**: The agent operates as a verifiable economic actor on-chain. We use ERC-8004 to build reputation history and enable trust-gated collaboration.
+   - **Verification**: BaseScan TX Hash `0x57270631868a7e620ff15e8c016190d325a6fafb184c66b8814c45b2bd082115`
+2. **Protocol Labs: AI & Robotics**
+   - **How it's used**: Fully autonomous execution loop for extracting mechanical constraints (Chain of Mechanics) from arbitrary natural language prompts.
+
 > **Hardware design analysis as a decentralized service for AI agents.**
 
 CoM Agent takes a natural language description of any hardware device and outputs a structured mechanical analysis — transmission paths, component relationships, and an intrinsic complexity score. Other agents consume this intelligence to create, evaluate, and improve hardware designs on-chain.
